@@ -1,0 +1,74 @@
+* {margin:0; padding:0; font:bold 100% 'Syncopate'; }
+#setup {}
+h1 {font:150% Arial;}
+#remote{width:550px;
+    margin:0 auto;}
+#whatson {margin-bottom:1em;
+    min-height:80px;
+    text-align:center;}
+#devices .active {color: #0f0;}
+button {min-width:8ex;
+    height:40px;
+    border: 0;
+    border-radius: 10px;
+    box-shadow: 5px 10px 5px #888;
+    background: -moz-radial-gradient(center top , ellipse farthest-corner, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0) 100%) #888;
+    color: transparent;}
+.group {margin-bottom:.5em;}
+#command button {color:black; background-color:#88F;}
+button#power {background-color: #F88;}
+#colors {width:5em;
+    float: left;
+    text-align:center;}
+#colors button {min-width: 0;
+    height: 40px;
+    width: 40px;
+    overflow: hidden;
+    border-radius: 25px;
+    width: 50px;}
+#arrows {width:250px;
+    float:right;
+    position:relative;
+    top:-200px;
+    text-align:center;}
+#arrows button{ background-color: #FF8;}
+#red {background:red;
+    color:transparent;}
+#green {background:green;
+    color:transparent;}
+#yellow {background:yellow;
+    color:transparent;}
+#blue {background:blue;
+    color: transparent;}
+.numbers {margin-left: 5em;
+    display:block;
+    width:13em;}
+.numbers button {color:black;
+    border-radius: 10px;
+}
+.updn button{color: black;}
+#control button {color: black;}
+#record {}
+#ffwd {}
+#stop {}
+#replay {}
+#rew {}
+#play {}
+#pause {}
+#arrows button{
+    color:black;
+    min-width:0;
+    height: 60px;
+    font-size:200%;
+    overflow: hidden;
+    width: 60px;}
+#right {
+border-radius: 0 30px 30px 0;}
+#left {
+    border-radius: 30px 0 0 30px;}
+#down {
+    border-radius: 0 0 30px 30px;}
+#up {
+    border-radius: 30px 30px 0px 0px;}
+#select {
+    border-radius: 30px;}

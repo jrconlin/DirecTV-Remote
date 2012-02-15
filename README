@@ -1,0 +1,7 @@
+Crappy HTML5 page to control my DirecTV console. 
+
+You can load this into it's own page, or store it locally. 
+Obviously, it needs UI love, but it's mostly laid out with tags.
+I'd love to have this crawl the local net with workers, but I can't get the local IP in Javascipt. 
+
+I'll be tweaking this every so often. Feel free to yell at me that this should use j-random framework, or that I'm killing kittens with -moz  styles. It works.

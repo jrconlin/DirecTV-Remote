@@ -1,0 +1,256 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>DVR control</title>
+<meta name="viewport" content="width=550px,initial-scale=1.0,user-scalable=yes">
+<link href='http://fonts.googleapis.com/css?family=Syncopate' rel='stylesheet' type='text/css'>
+<link href="style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <div id="setup" class="section">
+        <div class="msg"></div>
+        <ul id="devices"></ul>
+        <li><input id="newVcr" type="text" value=""/><button id="addVcr">Add</button></li>
+        </ol>
+    </div>
+
+    </div>
+    <div id="whatson" class="section">
+        <h1 id="title"></h1>
+        <h2 id="callsign"></h2>
+        <div id="desc"></div>
+    </div>
+    <div id="remote" class="section">
+        <div id="command" class="group">
+            <button id="power" class="power">power</button>
+            <button id="guide" class="guide ">guide</button>
+            <button id="list" class="list ">list</button>
+            <button id="exit" class="exit ">exit</button>
+            <button id="menu" class="menu ">menu</button>
+            <button id="info" class="info ">info</button>
+        </div>
+        <div id="control" class="group">
+            <button name="replay" id="replay" class="replay ">replay</button>
+            <button name="rew" id="rew" class="rew ">rew</button>
+            <button name="pause" id="pause" class="pause">pause </button>
+            <button name="play" id="play" class="play ">play </button>
+            <button name="stop" id="stop" class="stop ">stop</button>
+            <button name="ffwd" id="ffwd" class="ffwd ">ffwd</button>
+            <button name="advance" id="advance" class="advance ">advance</button>
+        </div>
+        <div id="colors" class="group">
+            <button name="red" id="red" class="red ">red </button>
+            <button name="green" id="green" class="green ">green </button>
+            <button name="yellow" id="yellow" class="yellow">yellow </button>
+            <button name="blue" id="blue" class="blue">blue </button>
+            <button name="record" id="record" class="record">record</button>
+        </div>
+        <div id="keypad" class="group">
+            <span class="updn">
+            <button name="chanup" id="chanup" class="chanup">&#8657;</button>
+            <button name="chandown" id="chandown" class="chandown">&#8659;</button>
+            <button name="prev" id="prev" class="prev">&#8617;</button>
+            </span>
+            <span class="numbers">
+            <button name="1" id="1" class="1 delayed">1</button>
+            <button name="2" id="2" class="2 delayed">2</button>
+            <button name="3" id="3" class="3 delayed">3</button>
+            <button name="4" id="4" class="4 delayed">4</button>
+            <button name="5" id="5" class="5 delayed">5</button>
+            <button name="6" id="6" class="6 delayed">6</button>
+            <button name="7" id="7" class="7 delayed">7</button>
+            <button name="8" id="8" class="8 delayed">8</button>
+            <button name="9" id="9" class="9 delayed">9</button>
+            <button name="dash" id="dash" class="dash delayed">-</button>
+            <button name="0" id="0" class="0 delayed">0</button>
+            <button name="enter" id="enter" class="enter delayed">&#8626;</button>
+            </span>
+        </div>
+        <div id="arrows" class="group">
+            <button id="up" class="up">&#8593;</button><br>
+            <button name="left" id="left" class="left">&#8592;</button>
+            <button name="select" id="select" class="select">select </button>
+            <button name="right" id="right" class="right">&#8594;</button><br>
+            <button name="down" id="down" class="down">&#8595;</button>
+        </div>
+    </div>
+</body>
+<div id="scripts"></div>
+<script language="javascript" type="text/javascript">
+
+var devices = new Array();
+var timers = new Array();
+var cb = {};
+
+function upplay(result){
+    document.getElementById('title').innerHTML = result.title;
+    document.getElementById('callsign').innerHTML = result.callsign;
+    var desc = "Channel: " + result.major;
+    try {
+        if (result.music){
+            desc += '<div class="music">' +
+            result.music.title + " " + result.music.by +
+            '</div>'
+        }
+    } catch(e) {
+        console.error(e)
+    }
+    document.getElementById('desc').innerHTML = desc;
+}
+
+function getPlaying() {
+    sendCmd(getActive(), '/tv/getTuned', upplay)
+}
+
+function ccb(result) {
+    var scr = document.getElementById("b_" + result.key);
+    scr.parentNode.removeChild(scr);
+    getPlaying();
+}
+
+function delayClick(button){
+    // append value to delayClick field.
+    // if "enter" send complete field & blank storage.
+}
+
+function sendCmd(target,uri, callback){
+    var id = "s" + Math.floor(Math.random() * 1000000);
+    var path = 'http://' + target + ':8080' + uri;
+    (function(id, path, callback) {
+        console.debug('Creating callback ' + id)
+        cb[id] = function(event) {
+            console.debug('In callback ' + id)
+            callback(event, target);
+            k = document.getElementById(id);
+            k.parentNode.removeChild(k);
+            delete(cb[id]);
+        }
+        s = document.createElement('script');
+        s.id = id;
+        prefix = '?';
+        if (path.indexOf('?') != -1) {
+            prefix = '&';
+        }
+        s.src = path + prefix + 'callback=cb.' + id
+        document.getElementById('scripts').appendChild(s);
+    }) (id, path, callback, target)
+}
+
+function sendClick(button) {
+    var target = getActive();
+    sendCmd(target,
+            '/remote/processKey?key=' + button.currentTarget.id,
+            function (result) {
+                sendCmd(target, '/tv/getTuned', upplay)
+            })
+}
+
+var storage = window.localStorage;
+
+function devices_set() {
+    devices = window.localStorage.getItem("devices");
+    return devices == undefined;
+}
+
+function toggle(value, string) {
+    if (string.indexOf(value) > 0){
+        return string.split(' ').filter(function(x){return x != value}).join(' ');
+    }
+    return string += ' '+value;
+}
+
+function setActive(location){
+    var pactive = document.getElementById(getActive());
+    if (pactive) {
+        pactive.className = toggle('active', pactive.className);
+    }
+    window.localStorage.setItem('active', location);
+    pactive = document.getElementById(location);
+    pactive.className = toggle('active', pactive.className);
+    getPlaying();
+}
+
+function getActive(){
+    var storage = window.localStorage;
+    return storage.getItem('active');
+}
+
+function testDevice(event) {
+    console.debug('testing');
+    target = document.getElementById('newVcr');
+    addr = target.value;
+    sendCmd(addr, '/info/getLocations',
+            function(locInfo, target){
+                var location = locInfo.locations[0].locationName;
+                var dvrs = getDvrs();
+                dvrs[target] = {
+                    'name': location,
+                    'ip': target
+                };
+                setDvrs(dvrs);
+                showDvrs();
+                setActive(target);
+            });
+}
+
+function getDvrs() {
+    var dvrs = {};
+    var str = storage.getItem('dvrs');
+    if (str != undefined){
+        dvrs =  JSON.parse(str);
+    }
+    return dvrs;
+}
+
+function setDvrs(dvrs) {
+    storage.setItem('dvrs', JSON.stringify(dvrs));
+}
+
+function showDvrs() {
+    var dvrs = getDvrs();
+    var active = getActive();
+    document.getElementById('devices').innerHTML='';
+    for (dvri in dvrs) {
+        dvr = dvrs[dvri];
+        var li = document.createElement('li');
+        li.className = "device";
+        if (active && (dvr.ip == active)) {
+            li.className += " active";
+        }
+        li.id = dvr.ip;
+        li.innerHTML = dvr.name;
+        li.addEventListener('click', function(event) {
+            setActive(event.currentTarget.id)
+        })
+        document.getElementById('devices').appendChild(li);
+    }
+}
+
+function init() {
+    // set the button codes.
+    buttons = document.getElementById('remote').getElementsByTagName('button');
+    var button;
+    for (var i=0, len=buttons.length; button=buttons[i], i < len; i++){
+        if (button.className.match("delayed")) {
+            button.addEventListener('click', delayClick, false);
+        } else {
+            button.addEventListener('click', sendClick, false);
+        }
+    }
+
+    if (window.localStorage.getItem('dvrs') == undefined) {
+        setup = document.getElementById('setup')
+        setup.getElementsByClassName('msg')[0].innerHTML="Please enter the address of your DVR";
+    }
+    else {
+        showDvrs();
+        getPlaying();
+        timers['upPlay'] = setInterval(getPlaying, 5000);
+    }
+    document.getElementById('addVcr').addEventListener('click', testDevice, true);
+}
+
+init();
+
+</script>
+</html>
