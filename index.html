@@ -117,9 +117,9 @@ function sendCmd(target,uri, callback){
     var id = "s" + Math.floor(Math.random() * 1000000);
     var path = 'http://' + target + ':8080' + uri;
     (function(id, path, callback) {
-        console.debug('Creating callback ' + id)
+        //console.debug('Creating callback ' + id)
         cb[id] = function(event) {
-            console.debug('In callback ' + id)
+            //console.debug('In callback ' + id)
             callback(event, target);
             k = document.getElementById(id);
             k.parentNode.removeChild(k);
@@ -176,7 +176,7 @@ function getActive(){
 }
 
 function testDevice(event) {
-    console.debug('testing');
+    // console.debug('testing');
     target = document.getElementById('newVcr');
     addr = target.value;
     sendCmd(addr, '/info/getLocations',
