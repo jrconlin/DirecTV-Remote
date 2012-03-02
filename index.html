@@ -9,7 +9,9 @@
 <body>
     <div id="setup" class="section">
         <div class="msg"></div>
+        <div id="addVcr">
         <input id="newVcr" type="text" value=""/><button id="addVcr" title="add">Add</button>
+        </div>
         <ul id="devices"></ul>
     </div>
 
@@ -63,6 +65,7 @@
             <button name="dash" id="dash" class="dash delayed">-</button>
             <button name="0" id="0" class="0 delayed">0</button>
             <button name="enter" id="enter" class="enter delayed">&#8626;</button>
+            <div id="sendKeys"></div>
             </span>
         </div>
         <div id="arrows" class="group">
@@ -137,8 +140,9 @@ function sendCmd(target,uri, callback){
 
 function sendClick(button) {
     var target = getActive();
+    console.debug('sending ' + button);
     sendCmd(target,
-            '/remote/processKey?key=' + button.currentTarget.id,
+            '/remote/processKey?key=' + button,
             function (result) {
                 sendCmd(target, '/tv/getTuned', upplay)
             })
@@ -225,6 +229,45 @@ function showDvrs() {
     }
 }
 
+function sendKey(event) {
+    console.debug(event);
+    if (event.originalTarget.localName == 'input')
+    {
+        return true;
+    }
+    ks = {
+            '0-8':  'replay',
+            '0-46': 'exit',
+            '0-27': 'exit',
+            '0-40': 'down',
+            '0-38': 'up',
+            '0-37': 'left',
+            '0-39': 'right',
+            '0-33': 'chanup',
+            '0-34': 'chandown',
+            '32-0': 'select',
+            };
+    kk = event.charCode + '-' + event.keyCode
+    console.debug(event, kk);
+    if (kk in ks) {
+        sendClick(ks[kk]);
+        console.debug('returning false');
+        return false; 
+    }
+    var sendKeys = document.getElementById('sendKeys');
+    if (event.keyCode == '13') {
+        keybuffer = 
+        sendCmd(getActive(), '/tv/tune?major=' + 
+            sendKeys.innerHTML + 
+            '&minor=65535', function() { sendKeys.innerHTML = ''});
+    }
+    var chr = String.fromCharCode(event.charCode);
+    if (chr >= '0' && chr <= '9') {
+        sendKeys.innerHTML += chr;
+    }
+}
+    
+
 function init() {
     // set the button codes.
     buttons = document.getElementById('remote').getElementsByTagName('button');
@@ -233,7 +276,10 @@ function init() {
         if (button.className.match("delayed")) {
             button.addEventListener('click', delayClick, false);
         } else {
-            button.addEventListener('click', sendClick, false);
+            button.addEventListener('click', 
+                function(event) {
+                    sendClick(event.currentTarget.id);
+                }, false);
         }
     }
 
@@ -247,6 +293,8 @@ function init() {
         timers['upPlay'] = setInterval(getPlaying, 5000);
     }
     document.getElementById('addVcr').addEventListener('click', testDevice, true);
+    document.getElementsByTagName('body')[0].addEventListener('keypress', sendKey, true);
+console.debug('ok');
 }
 
 init();
