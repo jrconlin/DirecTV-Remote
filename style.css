@@ -24,7 +24,7 @@ h1 {font:150% Arial;}
 button {min-width:8ex;
     height:40px;
     border-radius: 10px;
-    box-shadow: 5px 10px 5px #888;
+    box-shadow: 5px 5px 5px #888;
     background: -moz-radial-gradient(center top , ellipse farthest-corner, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0) 100%) #888;
     cursor: pointer;
     overflow:hidden;
