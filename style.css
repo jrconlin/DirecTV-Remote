@@ -15,7 +15,7 @@
     width: 7em;
 }
 h1 {font:150% Arial;}
-#remote{width:550px;
+#remote{width:480px;
     margin:0 auto;}
 #whatson {margin-bottom:1em;
     min-height:90px;
@@ -23,12 +23,14 @@ h1 {font:150% Arial;}
 #devices .active {color: #0f0;}
 button {min-width:8ex;
     height:40px;
-    border: 0;
     border-radius: 10px;
     box-shadow: 5px 10px 5px #888;
     background: -moz-radial-gradient(center top , ellipse farthest-corner, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0) 100%) #888;
     cursor: pointer;
+    overflow:hidden;
     }
+#control button {width:62px;}
+#command button {width:72.6px;}
 .group {margin-bottom:.5em;}
 #command button {color:black; background-color:#88F;}
 button#power {background-color: #F88;}
@@ -41,13 +43,12 @@ button#power {background-color: #F88;}
     overflow: hidden;
     border-radius: 25px;
     width: 50px;}
-#arrows {width:250px;
+#arrows {width:200px;
     float:right;
     position:relative;
     top:-200px;
     height: 0;
     text-align:center;}
-#arrows button{ background-color: #FF8;}
 #red {background:red;
     color:transparent;}
 #green {background:green;
@@ -65,6 +66,8 @@ button#power {background-color: #F88;}
 label {display:none;}
 #command label{display:block;}
 #arrows button{
+    background-color: #FF8;
+    border: 4px solid #FFA;
     min-width:0;
     height: 60px;
     font-size:200%;
