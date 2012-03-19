@@ -4,17 +4,19 @@
 <title>DVR control</title>
 <meta name="viewport" content="width=550px,initial-scale=1.0,user-scalable=yes">
 <link href='http://fonts.googleapis.com/css?family=Syncopate' rel='stylesheet' type='text/css'>
+<!-- using fontawesome from twitter http://fortawesome.github.com/Font-Awesome/ -->
+<link href="font/font-awesome.css" rel='stylesheet' type='text/css'>
 <link href="style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
     <div id="setup" class="section">
+        <div class="title">Settings</div>
         <div class="msg"></div>
         <div id="addVcr">
-        <input id="newVcr" type="text" value=""/><button id="addVcr" title="add">Add</button>
+        <input id="newVcr" type="text" value=""/><button id="addVcr" title="add" class="icon-plus"><label>Add</label></button>
         </div>
         <ul id="devices"></ul>
     </div>
-
     </div>
     <div id="whatson" class="section">
         <h1 id="title"></h1>
@@ -23,34 +25,34 @@
     </div>
     <div id="remote" class="section">
         <div id="command" class="group">
-            <button id="power" class="power">power</button>
-            <button id="guide" class="guide ">guide</button>
-            <button id="list" class="list ">list</button>
-            <button id="exit" class="exit ">exit</button>
-            <button id="menu" class="menu ">menu</button>
-            <button id="info" class="info ">info</button>
+            <button id="power" class="power icon-off"><label>power</label></button>
+            <button id="guide" class="guide icon-th-large"><label>guide</label></button>
+            <button id="list" class="list icon-list"><label>list</label></button>
+            <button id="exit" class="exit icon-remove"><label>exit</label></button>
+            <button id="menu" class="menu icon-list-alt"><label>menu</label></button>
+            <button id="info" class="info icon-info-sign"><label>info</label></button>
         </div>
         <div id="control" class="group">
-            <button name="replay" id="replay" class="replay ">replay</button>
-            <button name="rew" id="rew" class="rew ">rew</button>
-            <button name="pause" id="pause" class="pause">pause </button>
-            <button name="play" id="play" class="play ">play </button>
-            <button name="stop" id="stop" class="stop ">stop</button>
-            <button name="ffwd" id="ffwd" class="ffwd ">ffwd</button>
-            <button name="advance" id="advance" class="advance ">advance</button>
+            <button name="replay" id="replay" class="replay icon-step-backward"><label>replay</label></button>
+            <button name="rew" id="rew" class="rew icon-backward"><label>rew</label></button>
+            <button name="pause" id="pause" class="pause icon-pause"><label>pause</label></button>
+            <button name="play" id="play" class="play icon-play"><label>play</label></button>
+            <button name="stop" id="stop" class="stop icon-stop"><label>stop<span></button>
+            <button name="ffwd" id="ffwd" class="ffwd icon-fast-forward"><label>ffwd</span></button>
+            <button name="advance" id="advance" class="advance icon-step-forward"><label>advance</span></button>
         </div>
         <div id="colors" class="group">
-            <button name="red" id="red" class="red ">red </button>
-            <button name="green" id="green" class="green ">green </button>
-            <button name="yellow" id="yellow" class="yellow">yellow </button>
-            <button name="blue" id="blue" class="blue">blue </button>
-            <button name="record" id="record" class="record">record</button>
+            <button name="red" id="red" class="red "><label>red</span></button>
+            <button name="green" id="green" class="green "><label>green</span></button>
+            <button name="yellow" id="yellow" class="yellow"><label>yellow</span></button>
+            <button name="blue" id="blue" class="blue"><label>blue</span></button>
+            <button name="record" id="record" class="record icon-facetime-video"><label>record</label></button>
         </div>
         <div id="keypad" class="group">
             <span class="updn">
-            <button name="chanup" id="chanup" class="chanup">&#8657;</button>
-            <button name="chandown" id="chandown" class="chandown">&#8659;</button>
-            <button name="prev" id="prev" class="prev">&#8617;</button>
+            <button name="chanup" id="chanup" class="chanup icon-chevron-up"><label>prev channel</label></button>
+            <button name="chandown" id="chandown" class="chandown icon-chevron-down"><label>next channel</label></button>
+            <button name="prev" id="prev" class="previ icon-retweet"><label>prev</label></button>
             </span>
             <span class="numbers">
             <button name="1" id="1" class="1 delayed">1</button>
@@ -69,12 +71,14 @@
             </span>
         </div>
         <div id="arrows" class="group">
-            <button id="up" class="up">&#8593;</button><br>
-            <button name="left" id="left" class="left">&#8592;</button>
-            <button name="select" id="select" class="select">select </button>
-            <button name="right" id="right" class="right">&#8594;</button><br>
-            <button name="down" id="down" class="down">&#8595;</button>
+            <button id="up" class="up icon-arrow-up"><label>up</label></button><br>
+            <button name="left" id="left" class="left icon-arrow-left"><label>left</label></button>
+            <button name="select" id="select" class="select icon-ok-sign"><label>select</label></button>
+            <button name="right" id="right" class="right icon-arrow-right"><label>right</label></button><br>
+            <button name="down" id="down" class="down icon-arrow-down"><label>down</label></button>
         </div>
+    </div>
+    <div id="playlist">
     </div>
 </body>
 <div id="scripts"></div>
@@ -265,6 +269,9 @@ function sendKey(event) {
     if (chr >= '0' && chr <= '9') {
         sendKeys.innerHTML += chr;
     }
+}
+
+function getPlayList(){
 }
     
 

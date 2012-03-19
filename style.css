@@ -1,11 +1,24 @@
 * {margin:0; padding:0; font:bold 100% 'Syncopate'; }
-#setup {}
+#setup { width: 300px;
+    float:left;}
 #setup input {width: 18ex;}
+#setup .title {
+    -moz-transform:rotateZ(-270deg);
+    -webkit-transform:rotateZ(-270deg);
+    -ie-transform:rotateZ(-270deg);
+    -o-transform:rotateZ(-270deg);
+    transform:rotateZ(-270deg);
+    left:10em;
+    line-height:0;
+    position:relative;
+    top: 4em;
+    width: 7em;
+}
 h1 {font:150% Arial;}
 #remote{width:550px;
     margin:0 auto;}
 #whatson {margin-bottom:1em;
-    min-height:80px;
+    min-height:90px;
     text-align:center;}
 #devices .active {color: #0f0;}
 button {min-width:8ex;
@@ -14,6 +27,7 @@ button {min-width:8ex;
     border-radius: 10px;
     box-shadow: 5px 10px 5px #888;
     background: -moz-radial-gradient(center top , ellipse farthest-corner, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0) 100%) #888;
+    cursor: pointer;
     }
 .group {margin-bottom:.5em;}
 #command button {color:black; background-color:#88F;}
@@ -26,12 +40,12 @@ button#power {background-color: #F88;}
     width: 40px;
     overflow: hidden;
     border-radius: 25px;
-    color: transparent;
     width: 50px;}
 #arrows {width:250px;
     float:right;
     position:relative;
     top:-200px;
+    height: 0;
     text-align:center;}
 #arrows button{ background-color: #FF8;}
 #red {background:red;
@@ -48,13 +62,8 @@ button#power {background-color: #F88;}
 .numbers button {
     border-radius: 10px;
 }
-#record {}
-#ffwd {}
-#stop {}
-#replay {}
-#rew {}
-#play {}
-#pause {}
+label {display:none;}
+#command label{display:block;}
 #arrows button{
     min-width:0;
     height: 60px;
@@ -71,3 +80,4 @@ border-radius: 0 30px 30px 0;}
     border-radius: 30px 30px 0px 0px;}
 #select {
     border-radius: 30px;}
+script{ display:none; 
