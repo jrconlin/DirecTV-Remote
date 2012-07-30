@@ -1,5 +1,6 @@
 * {margin:0; padding:0; font:bold 100% 'Syncopate'; }
 #setup { width: 300px;
+    padding-left: 1em;
     float:left;}
 #setup input {width: 18ex;}
 #setup .title {
@@ -8,17 +9,20 @@
     -ie-transform:rotateZ(-270deg);
     -o-transform:rotateZ(-270deg);
     transform:rotateZ(-270deg);
-    left:10em;
+    left:-4em;
     line-height:0;
     position:relative;
     top: 4em;
     width: 7em;
 }
+#setup ul {
+    list-style: none;
+}
 h1 {font:150% Arial;}
 #remote{width:480px;
     margin:0 auto;}
 #whatson {margin-bottom:1em;
-    min-height:90px;
+    min-height:10EM;
     text-align:center;}
 #devices .active {color: #0f0;}
 button {min-width:8ex;
@@ -64,7 +68,6 @@ button#power {background-color: #F88;}
     border-radius: 10px;
 }
 label {display:none;}
-#command label{display:block;}
 #arrows button{
     background-color: #FF8;
     border: 4px solid #FFA;

@@ -1,0 +1,13 @@
+{"name": "DirecTV Remote",
+"description": "Control your DirecTV receiver from a web page.",
+"developer": {"name": "Evil on a Stick labs",
+ "url": "http://evilonastick.com"},
+"installs_allowed_from":["*"],
+"appcache_path":"/dvr.appcache",
+"icons":{ "256": "256.png",
+"128": "128.png",
+"64": "64.png",
+"48":"48.png",
+"32":"32.png",
+"16","16.png"],
+"version": "1.0"}

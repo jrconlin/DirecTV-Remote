@@ -2,6 +2,7 @@
 <html>
 <head>
 <title>DVR control</title>
+<meta charset="utf8">
 <meta name="viewport" content="width=550px,initial-scale=1.0,user-scalable=yes">
 <link href='http://fonts.googleapis.com/css?family=Syncopate' rel='stylesheet' type='text/css'>
 <!-- using fontawesome from twitter http://fortawesome.github.com/Font-Awesome/ -->
@@ -277,16 +278,30 @@ function getPlayList(){
 
 function init() {
     // set the button codes.
+    var buttons;
+    buttons = document.getElementsByTagName('button');
+    for each (var button in buttons) {
+        if (button && button.children && button.children.length) {
+            button.title = button.children[0].innerHTML;
+        }
+    }
+    delete buttons;
     buttons = document.getElementById('remote').getElementsByTagName('button');
-    var button;
-    for (var i=0, len=buttons.length; button=buttons[i], i < len; i++){
-        if (button.className.match("delayed")) {
-            button.addEventListener('click', delayClick, false);
-        } else {
-            button.addEventListener('click', 
-                function(event) {
-                    sendClick(event.currentTarget.id);
-                }, false);
+    for each (button in buttons) {
+        try {
+            if (typeof(button) != 'object') {
+                continue;
+            }
+            if (button.className.match("delayed")) {
+                button.addEventListener('click', delayClick, false);
+            } else {
+                button.addEventListener('click', 
+                    function(event) {
+                        sendClick(event.currentTarget.id);
+                    }, false);
+            }
+        } catch (e) {
+            console.error("Can't add click handler to", typeof(button), e);
         }
     }
 
